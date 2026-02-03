@@ -1,13 +1,12 @@
 'use client';
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useWallet } from '@/hooks/use-wallet';
 import { useWalletStore } from '@/lib/store/wallet-store';
 import { MintPage } from '@/components/pages/mint-page';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Zap, Gamepad2, ShoppingCart, Trophy, Sparkles } from 'lucide-react';
+import { Zap, Gamepad2, ShoppingCart, Trophy, Sparkles, Wallet } from 'lucide-react';
 
 export default function Home() {
   const { isConnected } = useWallet();
@@ -28,7 +27,10 @@ export default function Home() {
             </div>
             <h1 className="text-xl font-bold hidden sm:block">Avatar Legends</h1>
           </div>
-          <ConnectButton accountStatus="address" />
+          <Button variant="outline" size="sm" className="bg-transparent gap-2">
+            <Wallet className="w-4 h-4" />
+            {isConnected ? 'Connected' : 'Connect Wallet'}
+          </Button>
         </div>
       </nav>
 
@@ -56,7 +58,10 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             {!isConnected ? (
-              <ConnectButton />
+              <Button size="lg" className="gap-2 text-base">
+                <Wallet className="w-5 h-5" />
+                Connect Wallet
+              </Button>
             ) : (
               <>
                 <Button size="lg" className="gap-2 text-base">
@@ -139,14 +144,19 @@ export default function Home() {
           <p className="text-lg text-muted-foreground text-balance mb-8">
             Start creating, playing, and trading today. Your avatar awaits.
           </p>
-          {!isConnected ? (
-            <ConnectButton />
-          ) : (
-            <Button size="lg" className="gap-2 text-base">
-              <Sparkles className="w-5 h-5" />
-              Create Your First Avatar
-            </Button>
-          )}
+          <Button size="lg" className="gap-2 text-base">
+            {!isConnected ? (
+              <>
+                <Wallet className="w-5 h-5" />
+                Connect Wallet
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-5 h-5" />
+                Create Your First Avatar
+              </>
+            )}
+          </Button>
         </div>
       </div>
 
