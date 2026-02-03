@@ -4,12 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MoreVertical, Zap, Heart, Shield, Medal as Zeta } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 interface AvatarCardProps {
   id: number;
@@ -53,27 +47,14 @@ export function AvatarCard({
             <CardTitle className="text-lg">{name}</CardTitle>
             <CardDescription>Level {level}</CardDescription>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <MoreVertical className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={onSelect}>View Details</DropdownMenuItem>
-              {!isStaked && onStake && (
-                <DropdownMenuItem onClick={onStake}>Stake</DropdownMenuItem>
-              )}
-              {isStaked && onUnstake && (
-                <DropdownMenuItem onClick={onUnstake}>Unstake</DropdownMenuItem>
-              )}
-              {onSell && <DropdownMenuItem onClick={onSell}>List for Sale</DropdownMenuItem>}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={onSelect}
+          >
+            <MoreVertical className="w-4 h-4" />
+          </Button>
         </div>
 
         {isStaked && (

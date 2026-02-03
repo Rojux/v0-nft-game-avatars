@@ -5,15 +5,7 @@ import { ListingCard } from '@/components/marketplace/listing-card';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { TrendingUp, Search, Filter } from 'lucide-react';
+import { TrendingUp, Search, Filter, ChevronDown } from 'lucide-react';
 
 // Mock marketplace data
 const MOCK_LISTINGS = [
@@ -169,11 +161,11 @@ export function MarketplacePage() {
             {/* Search Bar */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
+              <input
                 placeholder="Search by name or seller..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-input/50"
+                className="w-full pl-10 pr-4 py-2 bg-input/50 border border-border rounded-md text-foreground placeholder:text-muted-foreground"
               />
             </div>
 
@@ -183,30 +175,29 @@ export function MarketplacePage() {
                 <label className="text-sm font-medium text-muted-foreground mb-2 block">
                   Sort By
                 </label>
-                <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortBy)}>
-                  <SelectTrigger className="bg-input/50">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="recent">Recent Listings</SelectItem>
-                    <SelectItem value="price-low">Price: Low to High</SelectItem>
-                    <SelectItem value="price-high">Price: High to Low</SelectItem>
-                    <SelectItem value="level">Highest Level</SelectItem>
-                  </SelectContent>
-                </Select>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortBy)}
+                  className="w-full px-3 py-2 bg-input/50 border border-border rounded-md text-foreground"
+                >
+                  <option value="recent">Recent Listings</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="level">Highest Level</option>
+                </select>
               </div>
 
               <div className="flex-1 min-w-[200px]">
                 <label className="text-sm font-medium text-muted-foreground mb-2 block">
                   Min Level
                 </label>
-                <Input
+                <input
                   type="number"
                   min="1"
                   max="50"
                   value={minLevel}
                   onChange={(e) => setMinLevel(e.target.value)}
-                  className="bg-input/50"
+                  className="w-full px-3 py-2 bg-input/50 border border-border rounded-md text-foreground"
                 />
               </div>
 
@@ -214,13 +205,13 @@ export function MarketplacePage() {
                 <label className="text-sm font-medium text-muted-foreground mb-2 block">
                   Max Price (ETH)
                 </label>
-                <Input
+                <input
                   type="number"
                   min="0"
                   step="0.1"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
-                  className="bg-input/50"
+                  className="w-full px-3 py-2 bg-input/50 border border-border rounded-md text-foreground"
                 />
               </div>
 

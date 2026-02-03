@@ -8,14 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AlertCircle, Plus, Trophy, Zap } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { AlertCircle, Plus, Trophy, Zap, X } from 'lucide-react';
 
 export function DashboardPage() {
   const { isConnected, address } = useWallet();
@@ -207,18 +200,26 @@ export function DashboardPage() {
         )}
       </div>
 
-      {/* Avatar Details Dialog */}
-      <Dialog open={showDetails} onOpenChange={setShowDetails}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl">{selectedAvatar?.name}</DialogTitle>
-            <DialogDescription>
-              Level {selectedAvatar?.level} • ID #{selectedAvatar?.id.toString().padStart(6, '0')}
-            </DialogDescription>
-          </DialogHeader>
+      {/* Avatar Details Modal */}
+      {showDetails && selectedAvatar && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="border-border/50 bg-card/95 backdrop-blur w-full max-w-2xl">
+            <CardHeader className="flex flex-row items-start justify-between pb-4 border-b border-border/50">
+              <div>
+                <CardTitle className="text-2xl">{selectedAvatar.name}</CardTitle>
+                <CardDescription>
+                  Level {selectedAvatar.level} • ID #{selectedAvatar.id.toString().padStart(6, '0')}
+                </CardDescription>
+              </div>
+              <button
+                onClick={() => setShowDetails(false)}
+                className="p-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </CardHeader>
 
-          {selectedAvatar && (
-            <div className="space-y-6">
+            <CardContent className="pt-6 space-y-6">
               {/* Stats */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -271,10 +272,10 @@ export function DashboardPage() {
                   {selectedAvatar.isStaked ? 'Unstake' : 'Stake'}
                 </Button>
               </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,14 +7,7 @@ import { GameCard } from '@/components/games/game-card';
 import { BattleGame } from '@/components/games/battle-game';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, Sword, Zap, Dice6, TrendingUp } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { AlertCircle, Sword, Zap, Dice6, TrendingUp, X } from 'lucide-react';
 
 type GameType = 'battle' | 'quest' | 'dice' | null;
 
@@ -177,45 +170,57 @@ export function GamesPage() {
         </div>
       </div>
 
-      {/* Game Dialog */}
-      <Dialog open={isGameDialogOpen} onOpenChange={setIsGameDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-screen overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>
-              {activeGame === 'battle' && 'Battle Arena'}
-              {activeGame === 'quest' && 'Monster Quest'}
-              {activeGame === 'dice' && 'Dice Duel'}
-            </DialogTitle>
-            <DialogDescription>
-              Play as {selectedAvatar.name}
-            </DialogDescription>
-          </DialogHeader>
+      {/* Game Modal */}
+      {isGameDialogOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 max-h-screen overflow-y-auto">
+          <Card className="border-border/50 bg-card/95 backdrop-blur w-full max-w-2xl my-8">
+            <CardHeader className="flex flex-row items-start justify-between pb-4 border-b border-border/50">
+              <div>
+                <CardTitle>
+                  {activeGame === 'battle' && 'Battle Arena'}
+                  {activeGame === 'quest' && 'Monster Quest'}
+                  {activeGame === 'dice' && 'Dice Duel'}
+                </CardTitle>
+                <CardDescription>
+                  Play as {selectedAvatar?.name}
+                </CardDescription>
+              </div>
+              <button
+                onClick={() => setIsGameDialogOpen(false)}
+                className="p-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </CardHeader>
 
-          {activeGame === 'battle' && selectedAvatar && (
-            <BattleGame
-              avatarName={selectedAvatar.name}
-              avatarHealth={selectedAvatar.health}
-              avatarPower={selectedAvatar.power}
-              avatarDefense={selectedAvatar.defense}
-              onGameEnd={handleGameEnd}
-            />
-          )}
+            <CardContent className="pt-6">
+              {activeGame === 'battle' && selectedAvatar && (
+                <BattleGame
+                  avatarName={selectedAvatar.name}
+                  avatarHealth={selectedAvatar.health}
+                  avatarPower={selectedAvatar.power}
+                  avatarDefense={selectedAvatar.defense}
+                  onGameEnd={handleGameEnd}
+                />
+              )}
 
-          {activeGame === 'quest' && (
-            <div className="py-8 text-center">
-              <Zap className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <p className="text-muted-foreground">Monster Quest game coming soon...</p>
-            </div>
-          )}
+              {activeGame === 'quest' && (
+                <div className="py-8 text-center">
+                  <Zap className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground">Monster Quest game coming soon...</p>
+                </div>
+              )}
 
-          {activeGame === 'dice' && (
-            <div className="py-8 text-center">
-              <Dice6 className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <p className="text-muted-foreground">Dice Duel game coming soon...</p>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+              {activeGame === 'dice' && (
+                <div className="py-8 text-center">
+                  <Dice6 className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground">Dice Duel game coming soon...</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

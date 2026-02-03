@@ -2,15 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useWallet } from '@/hooks/use-wallet';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Sparkles, Menu, X, Gamepad2, ShoppingCart, LayoutDashboard, TrendingUp } from 'lucide-react';
 
 export function Navbar() {
@@ -90,7 +83,9 @@ export function Navbar() {
             </button>
 
             {/* Wallet Button */}
-            <ConnectButton accountStatus="address" />
+            <Button variant="outline" size="sm" className="bg-transparent">
+              {isConnected ? 'Connected' : 'Connect Wallet'}
+            </Button>
           </div>
         </div>
 
