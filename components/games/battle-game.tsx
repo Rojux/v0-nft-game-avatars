@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { AlertCircle, Heart, Zap, Shield } from 'lucide-react';
+import { Heart, Zap, Shield } from 'lucide-react';
 
 interface BattleGameProps {
   avatarName: string;
@@ -167,10 +166,12 @@ export function BattleGame({
               <h3 className="font-semibold text-foreground">{avatarName}</h3>
               <Badge variant="outline">{playerHealth} / {maxPlayerHealth} HP</Badge>
             </div>
-            <Progress
-              value={(playerHealth / maxPlayerHealth) * 100}
-              className="h-3"
-            />
+            <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-red-500 to-red-600 transition-all"
+                style={{ width: `${(playerHealth / maxPlayerHealth) * 100}%` }}
+              />
+            </div>
             <div className="flex gap-4 text-sm">
               <div className="flex items-center gap-1">
                 <Zap className="w-4 h-4 text-yellow-500" />
@@ -191,10 +192,12 @@ export function BattleGame({
               <h3 className="font-semibold text-foreground">{enemy.name}</h3>
               <Badge variant="outline">{enemy.health} / {enemy.maxHealth} HP</Badge>
             </div>
-            <Progress
-              value={(enemy.health / enemy.maxHealth) * 100}
-              className="h-3"
-            />
+            <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-purple-500 to-purple-600 transition-all"
+                style={{ width: `${(enemy.health / enemy.maxHealth) * 100}%` }}
+              />
+            </div>
             <div className="flex gap-4 text-sm">
               <div className="flex items-center gap-1">
                 <Zap className="w-4 h-4 text-yellow-500" />
